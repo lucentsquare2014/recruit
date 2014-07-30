@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="./head.html" />
-<title>Insert title here</title>
+<title>会社説明会管理画面</title>
 </head>
 <body>
 
