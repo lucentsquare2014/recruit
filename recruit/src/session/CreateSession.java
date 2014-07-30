@@ -47,6 +47,7 @@ public class CreateSession extends HttpServlet {
 		String capacity = request.getParameter("capacity");
 		if(area != null && date != null && start != null && end != null && capacity != null){
 			this.create(area, date, start, end, capacity);
+			response.sendRedirect("/recruit/session_admin.jsp");
 		}
 	}
 	
