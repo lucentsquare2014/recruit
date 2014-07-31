@@ -20,7 +20,7 @@
 	<%
 		GetSession gs = new GetSession();
 		String sql = "SELECT id, area, to_char(date, 'YYYY/MM/DD') AS date, start_time, end_time," +
-		" capacity, number FROM session ORDER BY date DESC";
+		" capacity, entry_count FROM session ORDER BY date DESC";
 		ArrayList<HashMap<String, String>> list = gs.getSessionList(sql);
 	%>
 	<div class="uk-width-medium-3-5 uk-container-center">
@@ -40,7 +40,7 @@
 					<span class="uk-width-1-4"><%= map.get("area") %></span>
 					<span class="uk-width-1-4"><%= map.get("date") %></span>
 					<span class="uk-width-1-4"><%= map.get("start_time") %>~<%= map.get("end_time") %></span>
-					<span class="uk-width-1-4"><%= map.get("number") %>/<%= map.get("capacity") %>
+					<span class="uk-width-1-4"><%= map.get("entry_count") %>/<%= map.get("capacity") %>
 						<a href="/recruit/update.jsp?id=<%=  map.get("id") %>" class="uk-align-right">
 							<i class="uk-icon-edit" data-uk-tooltip title="編集"></i>
 						</a>
@@ -49,8 +49,6 @@
 			</li>
 		<% } %>
 		</ul>
-		
 	</div>
-	
 </body>
 </html>

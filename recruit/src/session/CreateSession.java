@@ -54,7 +54,7 @@ public class CreateSession extends HttpServlet {
 	private void create(String area, String date, String start, String end, String capacity) {
 		AccessDB access = new AccessDB();
 		Connection con = access.openDB();
-		String sql = "INSERT INTO session (area, date, start_time, end_time, number, capacity) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO session (area, date, start_time, end_time, entry_count, capacity) VALUES (?, ?, ?, ?, ?, ?)";
 		try {
 			Timestamp datetime = new Timestamp(new SimpleDateFormat("yyyy/MM/dd").parse(date).getTime());
 			PreparedStatement pstmt = con.prepareStatement(sql);
@@ -62,7 +62,7 @@ public class CreateSession extends HttpServlet {
 			pstmt.setTimestamp(2, datetime);
 			pstmt.setString(3, start);
 			pstmt.setString(4, end);
-			pstmt.setString(5, "0");
+			pstmt.setInt(5, 0);
 			pstmt.setString(6, capacity);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {

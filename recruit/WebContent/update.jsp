@@ -8,7 +8,12 @@
 <jsp:include page="./head.html" />
 <script src="/recruit/script/form-select.js"></script>
 <script src="/recruit/script/datepicker.js"></script>
-<script src="/recruit/script/check.js"></script>
+<script src="/recruit/script/session_check.js"></script>
+<style type="text/css">
+label {
+	text-align: center;
+}
+</style>
 <title>説明会の編集</title>
 </head>
 <body>
@@ -96,7 +101,7 @@
 			</div>
 			<div class="uk-form-row">
 				<label class="uk-form-label uk-text-bold uk-text-large">参加人数</label>
-				<label class="uk-form-label" id="join"><%= map.get("number") %>&nbsp;人</label>
+				<span class="uk-form-label" id="join"><%= map.get("entry_count") %>&nbsp;人</span>
 			</div>
 			<div class="uk-form-row">
 				<label class="uk-form-label"></label>

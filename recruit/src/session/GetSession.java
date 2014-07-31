@@ -52,7 +52,7 @@ public class GetSession {
 		HashMap<String, String> map = new HashMap<String, String>();
 		Statement stmt;
 		String sql = "SELECT area, to_char(date, 'YYYY/MM/DD') AS date, start_time, end_time," +
-				" capacity, number FROM session WHERE id = '" + id + "'";
+				" capacity, entry_count FROM session WHERE id = '" + id + "'";
 		try {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);

@@ -6,6 +6,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <jsp:include page="./head.html" />
+<script src="/recruit/script/session.js"></script>
+<style type="text/css">
+label {
+	text-align: center;
+}
+div .uk-modal-dialog {
+	width: 450px;
+	top: 100px;
+}
+</style>
 <title>会社説明会</title>
 </head>
 <body>
@@ -13,7 +23,7 @@
 		GetSession gs = new GetSession();
 		String today = gs.getToday();
 		String sql = "SELECT id, area, to_char(date, 'YYYY/MM/DD') AS date, start_time, end_time," +
-		" capacity, number FROM session WHERE date >= '" + today + "' ORDER BY date ASC";
+		" capacity, entry_count FROM session WHERE date >= '" + today + "' ORDER BY date ASC";
 		ArrayList<HashMap<String, String>> list = gs.getSessionList(sql);
 	%>
 	<div class="uk-width-medium-1-2 uk-container-center">
@@ -21,40 +31,67 @@
 		<p>会社説明会開催！ <br>たくさんのご応募をお待ちしております。</p>
 		<p class="uk-text-bold"><i class="uk-icon-chevron-right uk-text-primary"></i> 会社説明会</p>
 		<p>&nbsp;<i class="uk-icon-stop"></i> 以下より希望の日程をお選びください。</p>
-		<table class="uk-table">
-			<tr>
-				<th>選択</th>
-				<th>開催日時</th>
-				<th>開催地</th>
-				<th>受付状態</th>
-			</tr>
-			<% 
-				for(int i = 0; i < list.size(); i++){ 
-					HashMap<String, String> map = list.get(i);
-					String status = "";
-					if(map.get("date").equals(today)){
-						status = "受付終了";
-					}else if(map.get("number").equals(map.get("capacity"))){
-						status = "満席";
-					}else{
-						status = "空席あり";
-					}
-			%>
-			<tr>
-				<td>
-				<% if(status.equals("空席あり")){ %>
-					<input type="radio" name="select">
-				<% }else{ %>
-					<input type="radio" name="select" disabled>
+		<form action="entry.jsp" method="post">
+			<table class="uk-table">
+				<tr>
+					<th>選択</th>
+					<th>開催日時</th>
+					<th>開催地</th>
+					<th>受付状態</th>
+				</tr>
+				<% 
+					for(int i = 0; i < list.size(); i++){ 
+						HashMap<String, String> map = list.get(i);
+						String status = "";
+						if(map.get("date").equals(today)){
+							status = "受付終了";
+						}else if(map.get("entry_count").equals(map.get("capacity"))){
+							status = "満席";
+						}else{
+							status = "空席あり";
+						}
+				%>
+				<tr>
+					<td>
+					<% if(status.equals("空席あり")){ %>
+						<input type="radio" name="select" value="<%= map.get("id") %>">
+					<% }else{ %>
+						<input type="radio" name="select" disabled>
+					<% } %>
+					</td>
+					<td>
+						<%= map.get("date") %>&nbsp;&nbsp;
+						<%= map.get("start_time") %>~<%= map.get("end_time") %>
+					</td>
+					<td><%= map.get("area") %></td>
+					<td><%= status %></td>
+				</tr>
 				<% } %>
-				</td>
-				<td><%= map.get("date") %>&nbsp;&nbsp;<%= map.get("start_time") %>~<%= map.get("end_time") %></td>
-				<td><%= map.get("area") %></td>
-				<td><%= status %></td>
-			</tr>
-			<% } %>
-		</table>
-		
+			</table>
+			<input type="submit" value="申し込む" id="entry" class="uk-button uk-button-primary uk-align-center" disabled>
+		</form>
+		<p>確認するのは<a href="#modal" data-uk-modal>こちら</a></p>
+		<div id="modal" class="uk-modal">
+    		<div class="uk-modal-dialog">
+        		<a class="uk-modal-close uk-close"></a>
+        		<div class="uk-form uk-width-3-4 uk-align-center">
+        			<p id="msg" class="uk-text-success">※名前とメールアドレスを入力して確認ボタンを押してください</p>
+        			<div class="uk-form-row">
+        				<label class="uk-form-label">名前　</label>
+        				<input type="text" name="name">
+        			</div>
+        			<div class="uk-form-row">
+        				<label class="uk-form-label">メール</label>
+        				<input type="text" name="mail" class="uk-form-width-medium">
+        			</div>
+        			<div class="uk-form-row">
+        				<div class="uk-width-1-2 uk-align-center">
+        					<button class="uk-button uk-button-success uk-width-1-1" id="enter">確認</button>
+        				</div>
+        			</div>
+        		</div>
+    		</div>
+		</div>
 		<p class="uk-text-bold"><i class="uk-icon-chevron-right uk-text-primary"></i> 持参する物</p>
 		<p>&nbsp;<i class="uk-icon-stop"></i> 会社説明会参加時： 履歴書(写真貼付)、筆記用具</p>
 		<p>&nbsp;<i class="uk-icon-stop"></i> 面接時： 卒業見込証明書、成績証明書、健康診断書</p>
