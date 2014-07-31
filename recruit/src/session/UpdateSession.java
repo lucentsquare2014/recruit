@@ -59,7 +59,7 @@ public class UpdateSession extends HttpServlet {
 		String sql = "UPDATE session SET area = ?, date = ?, start_time = ?, end_time = ?," +
 				" capacity = ? WHERE id = ?";
 		try {
-			Timestamp datetime = new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse(date).getTime());
+			Timestamp datetime = new Timestamp(new SimpleDateFormat("yyyy/MM/dd").parse(date).getTime());
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, area);
 			pstmt.setTimestamp(2, datetime);

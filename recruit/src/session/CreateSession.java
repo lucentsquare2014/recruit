@@ -56,7 +56,7 @@ public class CreateSession extends HttpServlet {
 		Connection con = access.openDB();
 		String sql = "INSERT INTO session (area, date, start_time, end_time, number, capacity) VALUES (?, ?, ?, ?, ?, ?)";
 		try {
-			Timestamp datetime = new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse(date).getTime());
+			Timestamp datetime = new Timestamp(new SimpleDateFormat("yyyy/MM/dd").parse(date).getTime());
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, area);
 			pstmt.setTimestamp(2, datetime);

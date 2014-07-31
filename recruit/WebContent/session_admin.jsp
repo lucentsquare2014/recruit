@@ -19,7 +19,9 @@
 <body>
 	<%
 		GetSession gs = new GetSession();
-		ArrayList<HashMap<String, String>> list = gs.getSessionList();
+		String sql = "SELECT id, area, to_char(date, 'YYYY/MM/DD') AS date, start_time, end_time," +
+		" capacity, number FROM session ORDER BY date DESC";
+		ArrayList<HashMap<String, String>> list = gs.getSessionList(sql);
 	%>
 	<div class="uk-width-medium-3-5 uk-container-center">
 		<p class="uk-h1 uk-text-center">会社説明会の管理</p><br>

@@ -5,20 +5,22 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import db.AccessDB;
 
 public class GetSession {
 	
-	public ArrayList<HashMap<String, String>> getSessionList(){
+	//説明会リストを取得
+	public ArrayList<HashMap<String, String>> getSessionList(String sql){
 		AccessDB access = new AccessDB();
 		Connection con = access.openDB();
 		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 		Statement stmt;
-		String sql = "SELECT id, area, to_char(date, 'YYYY/MM/DD') AS date, start_time, end_time," +
-				" capacity, number FROM session ORDER BY date DESC";
 		try {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -43,12 +45,13 @@ public class GetSession {
 		return list;
 	}
 	
+	//一つの説明会情報を取得
 	public HashMap<String, String> getSession(String id){
 		AccessDB access = new AccessDB();
 		Connection con = access.openDB();
 		HashMap<String, String> map = new HashMap<String, String>();
 		Statement stmt;
-		String sql = "SELECT area, to_char(date, 'YYYY-MM-DD') AS date, start_time, end_time," +
+		String sql = "SELECT area, to_char(date, 'YYYY/MM/DD') AS date, start_time, end_time," +
 				" capacity, number FROM session WHERE id = '" + id + "'";
 		try {
 			stmt = con.createStatement();
@@ -72,4 +75,10 @@ public class GetSession {
 		return map;
 	}
 	
+	//今日の日付を取得
+	public String getToday(){
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
 }

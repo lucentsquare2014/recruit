@@ -10,7 +10,7 @@ $(function(){
 			$("#alert").text("開催日時を入力してください！");
 			return false;
 		}
-		var dc = date.split('-');
+		var dc = date.split('/');
 		if(dc.length != 3){
 			$("#alert").text("正しい日付を入力してください！");
 			return false;

@@ -41,7 +41,7 @@
 			</div>
 			<div class="uk-form-row">
 				<label class="uk-form-label uk-text-bold uk-text-large">開催日時</label>
-				<input type="text" name="date" value="<%= map.get("date") %>" data-uk-datepicker="{format:'YYYY-MM-DD'}">
+				<input type="text" name="date" value="<%= map.get("date") %>" data-uk-datepicker="{format:'YYYY/MM/DD'}">
 			</div>
 			<div class="uk-form-row">
 				<label class="uk-form-label"></label>
