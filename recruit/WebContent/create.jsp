@@ -7,7 +7,7 @@
 <jsp:include page="./head.html" />
 <script src="/recruit/script/form-select.js"></script>
 <script src="/recruit/script/datepicker.js"></script>
-<script src="/recruit/script/create.js"></script>
+<script src="/recruit/script/check.js"></script>
 <style type="text/css">
 label {
 	text-align: center;
