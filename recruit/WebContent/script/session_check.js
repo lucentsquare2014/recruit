@@ -34,8 +34,8 @@ $(function(){
 			return false;
 		}
 		if(document.getElementById("join") != null){
-			var number = $("#join").text().replace("&nbsp;人", "");
-			if(capacity < number){
+			var number = $.trim($("#join").text().replace("人", ""));
+			if(Number(capacity) < Number(number)){
 				$("#alert").text("参加人数は定員人数を超えています！");
 				return false;
 			}

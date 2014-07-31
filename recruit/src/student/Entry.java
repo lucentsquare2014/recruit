@@ -49,7 +49,7 @@ public class Entry extends HttpServlet {
 			tel = "";
 		}
 		String session_id = request.getParameter("session_id");
-		if(check(name, university)){
+		if(existCheck(name, university) && overCheck(session_id)){
 			this.insertEntry(name, university, mail, session_id, tel);
 			HttpSession session = request.getSession(true);
 			session.setAttribute("session_id", session_id);
@@ -63,7 +63,7 @@ public class Entry extends HttpServlet {
 	}
 	
 	//もう予約したのかをチェック
-	private boolean check(String name, String university){
+	private boolean existCheck(String name, String university){
 		AccessDB access = new AccessDB();
 		Connection con = access.openDB();
 		Statement stmt;
@@ -109,5 +109,33 @@ public class Entry extends HttpServlet {
 			access.closeDB(con);
 		}
 	}
-
+	
+	private boolean overCheck(String id){
+		AccessDB access = new AccessDB();
+		Connection con = access.openDB();
+		boolean check = false;
+		String sql = "SELECT capacity, entry_count FROM session WHERE id = ?";
+		PreparedStatement pstmt;
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.valueOf(id));
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				int n = Integer.valueOf(rs.getString("capacity"));
+				int m = rs.getInt("entry_count");
+				if(n == m || n < m){
+					check =  false;
+				}else{
+					check =  true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			access.closeDB(con);
+		}
+		return check;
+	}
+	
 }
